@@ -1,0 +1,66 @@
+---
+title: "Covid-19 trials"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+source(here::here("covid_trials.R"))
+options(DT.options = list(scrollY="100vh"))
+```
+
+Column {.sidebar}
+-------------------------------------
+### Última atualização
+```{r}
+valueBox(format(as.POSIXct(Sys.time()),format='%Y-%m-%d %H:%M'))
+```
+
+-------------------------------------
+### Trials na base americana
+```{r}
+valueBox(nrow(eua))
+```
+
+-------------------------------------
+### Trials na base da OMS
+```{r}
+valueBox(nrow(oms))
+```
+
+
+Column {.tabset .tabset-fade}
+-------------------------------------
+
+### Remédios (lista padronizada)
+
+```{r}
+DT::datatable(drugs_processed)
+```   
+ 
+### Remédios (dados brutos)
+    
+```{r}
+DT::datatable(drugs_raw)
+```
+
+
+### Dados brutos EUA
+
+```{r}
+DT::datatable(eua, filter = "top")
+```   
+ 
+### Dados brutos OMS
+    
+```{r}
+DT::datatable(oms, filter = "top")
+```
+
+### Fontes OMS
+```{r}
+DT::datatable(fontes_oms)
+```

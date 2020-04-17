@@ -8,7 +8,9 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(dplyr)
 source(here::here("covid_trials.R"))
+knitr::opts_chunk$set(cache = TRUE)
 options(DT.options = list(scrollY="100vh"))
 ```
 
@@ -31,36 +33,51 @@ valueBox(nrow(eua))
 valueBox(nrow(oms))
 ```
 
+### Protocolos na base da União Europeia
+```{r}
+valueBox(nrow(eu_data))
+print("Um trial pode ter protocolos diferentes em cada país participante")
+```
+
+
 
 Column {.tabset .tabset-fade}
 -------------------------------------
 
-### Remédios (lista padronizada)
+### Drogas EUA 
 
 ```{r}
 DT::datatable(drugs_processed)
 ```   
  
-### Remédios (dados brutos)
+### Nomes de substâncias UE
     
 ```{r}
-DT::datatable(drugs_raw)
+DT::datatable(eu_substance_count)
 ```
 
 
-### Dados brutos EUA
+### Dados EUA
 
 ```{r}
 DT::datatable(eua, filter = "top")
 ```   
  
-### Dados brutos OMS
+
+### Dados UE
+```{r}
+DT::datatable(eu_data, filter = "top")
+```   
+
+ 
+### Dados OMS
     
 ```{r}
-DT::datatable(oms, filter = "top")
+DT::datatable(select(oms, -`Inclusion Criteria`, -`Exclusion Criteria`), 
+              filter = "top")
 ```
 
-### Fontes OMS
+### Fontes dos trials OMS
 ```{r}
 DT::datatable(fontes_oms)
 ```

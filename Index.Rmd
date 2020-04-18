@@ -35,8 +35,8 @@ valueBox(nrow(oms))
 
 ### Protocolos na base da União Europeia
 ```{r}
-valueBox(nrow(eu_data))
-print("Um trial pode ter protocolos diferentes em cada país participante")
+valueBox(nrow(eu_data), 
+         caption ="Um trial pode ter protocolos diferentes em cada país participante")
 ```
 
 
@@ -47,7 +47,7 @@ Column {.tabset .tabset-fade}
 ### Drogas EUA 
 
 ```{r}
-DT::datatable(drugs_processed)
+DT::datatable(drugs_grupos_count)
 ```   
  
 ### Nomes de substâncias UE

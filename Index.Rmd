@@ -10,7 +10,6 @@ output:
 library(flexdashboard)
 library(dplyr)
 source(here::here("covid_trials.R"))
-knitr::opts_chunk$set(cache = TRUE)
 options(DT.options = list(scrollY="100vh"))
 ```
 
@@ -35,10 +34,10 @@ valueBox(nrow(oms))
 
 ### Protocolos na base da União Europeia
 ```{r}
-valueBox(nrow(eu_data), 
-         caption ="Um trial pode ter protocolos diferentes em cada país participante")
+valueBox(nrow(eu_data))
 ```
 
+Um trial pode ter protocolos diferentes em cada país participante
 
 
 Column {.tabset .tabset-fade}

@@ -32,6 +32,13 @@ valueBox(nrow(eua))
 valueBox(nrow(oms))
 ```
 
+### Trials na base da China
+```{r}
+valueBox(nrow(china))
+```
+
+Extraidos da base da OMS + busca por outros mais recentes 
+
 ### Protocolos na base da União Europeia
 ```{r}
 valueBox(nrow(eu_data))
@@ -62,6 +69,10 @@ DT::datatable(eu_substance_count)
 DT::datatable(eua, filter = "top")
 ```   
  
+### Dados China
+```{r}
+DT::datatable(china, filter = "top")
+```   
 
 ### Dados UE
 ```{r}

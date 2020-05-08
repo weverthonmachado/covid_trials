@@ -9,7 +9,7 @@ output:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(dplyr)
-source(here::here("covid_trials.R"))
+source(here::here("covid_class.R"), encoding = "UTF-8")
 options(DT.options = list(scrollY="100vh"))
 ```
 
@@ -20,104 +20,155 @@ Column {.sidebar}
 valueBox(format(as.POSIXct(Sys.time()),format='%Y-%m-%d %H:%M'))
 ```
 
--------------------------------------
-### Trials na base americana
-```{r}
-valueBox(nrow(eua))
-```
+<!-- ------------------------------------- -->
+<!-- ### Trials na base americana -->
+<!-- ```{r} -->
+<!-- valueBox(nrow(eua)) -->
+<!-- ``` -->
 
 -------------------------------------
-### Trials na base da OMS
+### Total de trials na base da OMS
 ```{r}
-valueBox(nrow(oms))
+valueBox(nrow(dados_oms_tudo))  
 ```
+  
+Link para dados completos: <https://www.who.int/ictrp/COVID19-web.csv>
 
-### Trials na base da China
+-------------------------------------
+### Trials intervencionais na base da OMS
 ```{r}
-valueBox(nrow(china))
+valueBox(nrow(dados_oms))
 ```
+<!-- ### Trials na base da China -->
+<!-- ```{r} -->
+<!-- valueBox(nrow(china)) -->
+<!-- ``` -->
 
-Extraidos da base da OMS + busca por outros mais recentes 
+<!-- Extraidos da base da OMS + busca por outros mais recentes  -->
 
-### Protocolos na base da União Europeia
-```{r}
-valueBox(nrow(eu_data))
-```
+<!-- ### Protocolos na base da União Europeia -->
+<!-- ```{r} -->
+<!-- valueBox(nrow(eu_data)) -->
+<!-- ``` -->
 
-Um trial pode ter protocolos diferentes em cada país participante
+<!-- Um trial pode ter protocolos diferentes em cada país participante -->
 
 
 Column {.tabset .tabset-fade}
 -------------------------------------
+### Grupos
+```{r}
+DT::datatable(tab_grupos,
+              options = list(dom = 'tpi'),
+              caption = "Grupos")
+```
 
-### Drogas EUA 
+### Categorias
+```{r}
+DT::datatable(tab_categorias,
+              options = list(dom = 'tpi'),
+              caption = "Categorias")
+```
+
+### Substâncias
+```{r}
+DT::datatable(tab_substancias,
+              options = list(dom = 'tpi'),
+              caption = 'Substâncias (apenas trials do grupo "Drogas")')
+```
+
+### Países
+```{r}
+DT::datatable(tab_paises,
+              options = list(dom = 'tpi'))
+```
+
+### Dados 
 
 ```{r}
-DT::datatable(drugs_grupos_count,  
+DT::datatable(dados_exibicao,
+              caption = "Variáveis selecionadas; apenas trials intervencionais",
               extensions = 'Buttons',
               options = list(
                     dom = 'Bfrtip',
-                    buttons = c('csv', 'excel'))
-              )
-```   
- 
-### Nomes de substâncias UE
-    
+                    buttons = c('csv', 'excel')))
+```
+
+### Critérios de classificação 
+
 ```{r}
-DT::datatable(eu_substance_count,  
-              extensions = 'Buttons',
-              options = list(
-                    dom = 'Bfrtip',
-                    buttons = c('csv', 'excel'))
-              )
+DT::datatable(lista_regex,
+              options = list(dom = 'tip'),
+              caption = '**regex** = regular expression (padrões textuais); **variavel** = onde o padrão é buscado: Intervention ou Scientific title+Intervention ("concat")')
 ```
 
 
-### Dados EUA
 
-```{r}
-DT::datatable(eua, filter = "top",  
-              extensions = 'Buttons',
-              options = list(
-                    dom = 'Bfrtip',
-                    buttons = c('csv', 'excel'))
-              )
-```   
- 
-### Dados China
-```{r}
-DT::datatable(china, filter = "top",  
-              extensions = 'Buttons',
-              options = list(
-                    dom = 'Bfrtip',
-                    buttons = c('csv', 'excel'))
-              )
-```   
 
-### Dados UE
-```{r}
-DT::datatable(eu_data, filter = "top",  
-              extensions = 'Buttons',
-              options = list(
-                    dom = 'Bfrtip',
-                    buttons = c('csv', 'excel'))
-              )
-```   
+<!-- ### Drogas EUA  -->
 
- 
-### Dados OMS
-    
-```{r}
-DT::datatable(select(oms, -`Inclusion Criteria`, -`Exclusion Criteria`), 
-              filter = "top",  
-              extensions = 'Buttons',
-              options = list(
-                    dom = 'Bfrtip',
-                    buttons = c('csv', 'excel'))
-              )
-```
+<!-- ```{r} -->
+<!-- DT::datatable(drugs_grupos_count,   -->
+<!--               extensions = 'Buttons', -->
+<!--               options = list( -->
+<!--                     dom = 'Bfrtip', -->
+<!--                     buttons = c('csv', 'excel')) -->
+<!--               ) -->
+<!-- ```    -->
 
-### Fontes dos trials OMS
-```{r}
-DT::datatable(fontes_oms)
-```
+<!-- ### Nomes de substâncias UE -->
+
+<!-- ```{r} -->
+<!-- DT::datatable(eu_substance_count,   -->
+<!--               extensions = 'Buttons', -->
+<!--               options = list( -->
+<!--                     dom = 'Bfrtip', -->
+<!--                     buttons = c('csv', 'excel')) -->
+<!--               ) -->
+<!-- ``` -->
+
+
+<!-- ### Dados EUA -->
+
+<!-- ```{r} -->
+<!-- DT::datatable(eua, filter = "top",   -->
+<!--               extensions = 'Buttons', -->
+<!--               options = list( -->
+<!--                     dom = 'Bfrtip', -->
+<!--                     buttons = c('csv', 'excel')) -->
+<!--               ) -->
+<!-- ```    -->
+
+<!-- ### Dados China -->
+<!-- ```{r} -->
+<!-- DT::datatable(china, filter = "top", -->
+<!--               extensions = 'Buttons', -->
+<!--               options = list( -->
+<!--                     dom = 'Bfrtip', -->
+<!--                     buttons = c('csv', 'excel')) -->
+<!--               ) -->
+<!-- ``` -->
+
+<!-- ### Dados UE -->
+<!-- ```{r} -->
+<!-- DT::datatable(eu_data, filter = "top",   -->
+<!--               extensions = 'Buttons', -->
+<!--               options = list( -->
+<!--                     dom = 'Bfrtip', -->
+<!--                     buttons = c('csv', 'excel')) -->
+<!--               ) -->
+<!-- ```    -->
+
+
+<!-- ### Dados OMS -->
+
+<!-- ```{r} -->
+<!-- DT::datatable(select(oms, -`Inclusion Criteria`, -`Exclusion Criteria`),  -->
+<!--               filter = "top",   -->
+<!--               extensions = 'Buttons', -->
+<!--               options = list( -->
+<!--                     dom = 'Bfrtip', -->
+<!--                     buttons = c('csv', 'excel')) -->
+<!--               ) -->
+<!-- ``` -->
+

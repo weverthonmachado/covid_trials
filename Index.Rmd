@@ -86,7 +86,7 @@ DT::datatable(tab_paises,
 ### Dados 
 
 ```{r}
-DT::datatable(dados_exibicao,
+DT::datatable(dados_exibicao_wider,
               caption = "Variáveis selecionadas; apenas trials intervencionais",
               extensions = 'Buttons',
               options = list(
